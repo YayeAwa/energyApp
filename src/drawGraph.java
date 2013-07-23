@@ -27,7 +27,7 @@ public class drawGraph extends JFrame {
 		HistogramDataset dataset = new HistogramDataset();
 		v1 = new double[energyList.size()];
 		  for(int i=0; i<energyList.size();i++){
-				  v1[i]=energyList.get(i);
+				  v1[i]=(double) energyList.get(i);
 				  System.out.println(v1[i]);
 		  }
 		

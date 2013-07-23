@@ -37,7 +37,7 @@ public class ParseTab extends JPanel {
 	private ButtonGroup bg;
 	private JComboBox fixedValue;
 	private JFormattedTextField energyMin, energyMax;
-	private long minEnergy, maxEnergy;
+	private float minEnergy, maxEnergy;
 	private boolean goodRow = true;
 	private List<Float> energyTab, energyTabfinal;
 	
@@ -196,11 +196,15 @@ public class ParseTab extends JPanel {
 	public void getValTab(){
 		
 		System.out.println("test1");
+		energyTab.clear();
+		energyTabfinal.clear();
+		
 		// taking energies according to Qn values.
 		for(int i=0; i<table.getRowCount();i++){
 			System.out.println(goodRow);
 			for(int j=0; j<qnsFixedVal.size();j++){
-				if(table.getModel().getValueAt(i,j+3).equals(qnsValList.get(j).getValue())|qnsValList.get(j).getValue().equals("default")){
+				System.out.println(j);
+				if(qnsValList.get(j).getValue().equals(table.getModel().getValueAt(i,j+3))|qnsValList.get(j).getValue().equals("default")){
 					goodRow=true;				
 					System.out.println(qnsValList.get(j).getValue()+"  "+table.getModel().getValueAt(i,j+3));
 				}else{
@@ -220,6 +224,8 @@ public class ParseTab extends JPanel {
 		for(int k=0; k<energyTab.size();k++){
 			if(energyTab.get(k)>minEnergy & energyTab.get(k)<maxEnergy){
 				energyTabfinal.add(energyTab.get(k));
+				System.out.println(minEnergy);
+				System.out.println(maxEnergy);
 			}
 		}
 	}
@@ -228,16 +234,24 @@ public class ParseTab extends JPanel {
 	//Getting the qns values
 	public void getParam(){
 		System.out.println("test2");
+		qnsFixedVal.clear();
 		//fixed values
 		for(int i=0; i<qns.size();i++){
 			qnsFixedVal.add(qnsValList.get(i).getValue());
 			System.out.println(qnsFixedVal.get(i));
 		}
 		
-		//Energy
-		minEnergy = (long) energyMin.getValue();
-		maxEnergy = (long) energyMax.getValue();
-		System.out.println(minEnergy);
+		try{
+			//Energy
+			minEnergy = (float) energyMin.getValue();
+			maxEnergy = (float) energyMax.getValue();
+			System.out.println(minEnergy);
+		}
+		catch(Exception e){
+			minEnergy = (float)table.getModel().getValueAt(0, 1);
+			maxEnergy = (float)table.getModel().getValueAt(table.getModel().getRowCount()-1, 1);
+			
+		}
 	}
 	
 	
