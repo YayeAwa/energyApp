@@ -25,24 +25,7 @@ import javax.swing.table.TableColumnModel;
 
 public class ParseTab extends JPanel {
 	
-	String[] columnNames = {"State",
-            "energy",
-            "degeneracy",
-            "j",
-            "v"};
-	
-	Object[][] data = {
-		    {new Integer(1), new Float(2143.55), new Integer(1), new Integer(0), new Integer(1)},
-		    {new Integer(2), new Float(2147.46), new Integer(3), new Integer(1), new Integer(1)},
-		    {new Integer(3), new Float(2154.46), new Integer(5), new Integer(2), new Integer(1)},
-		    {new Integer(4), new Float(2166.46), new Integer(7), new Integer(3), new Integer(1)},
-		    {new Integer(5), new Float(2181.46), new Integer(9), new Integer(4), new Integer(1)},
-		    {new Integer(6), new Float(2200.46), new Integer(11), new Integer(5), new Integer(1)},
-		    {new Integer(7), new Float(2223.46), new Integer(13), new Integer(6), new Integer(1)},
-		    {new Integer(8), new Float(2249.46), new Integer(15), new Integer(7), new Integer(1)},
-		    {new Integer(9), new Float(2280.46), new Integer(17), new Integer(8), new Integer(1)}		    
-		};
-	
+
 	JTable table;
 	
 	private List<String> qns;
@@ -61,7 +44,26 @@ public class ParseTab extends JPanel {
 	
 	public ParseTab(){
 		
-		this.setLayout(new BorderLayout());
+		this.setLayout(new BorderLayout());	
+		
+		String[] columnNames = {"State",
+	            "energy",
+	            "degeneracy",
+	            "j",
+	            "v"};
+		
+		Object[][] data = {
+			    {new Integer(1), new Float(2143.55), new Integer(1), new Integer(0), new Integer(1)},
+			    {new Integer(2), new Float(2147.46), new Integer(3), new Integer(1), new Integer(1)},
+			    {new Integer(3), new Float(2154.46), new Integer(5), new Integer(2), new Integer(1)},
+			    {new Integer(4), new Float(2166.46), new Integer(7), new Integer(3), new Integer(1)},
+			    {new Integer(5), new Float(2181.46), new Integer(9), new Integer(4), new Integer(1)},
+			    {new Integer(6), new Float(2200.46), new Integer(11), new Integer(5), new Integer(1)},
+			    {new Integer(7), new Float(2223.46), new Integer(13), new Integer(6), new Integer(1)},
+			    {new Integer(8), new Float(2249.46), new Integer(15), new Integer(7), new Integer(1)},
+			    {new Integer(9), new Float(2280.46), new Integer(17), new Integer(8), new Integer(1)}		    
+			};
+		
 		
 		table = new JTable(data, columnNames);
 		qns = new ArrayList<String>();
@@ -172,7 +174,10 @@ public class ParseTab extends JPanel {
 		valid.setMaximumSize(valid.getPreferredSize());
 		valid.addActionListener(new ActionListener(){
 			public void actionPerformed(ActionEvent e){
+				qnsValList.get(fixedValue.getSelectedIndex()).setValue("default");
 				getParam();
+				getValTab();
+				drawGraph dGraph = new drawGraph(energyTabfinal, minEnergy, maxEnergy);
 			}
 		});
 		
@@ -190,20 +195,24 @@ public class ParseTab extends JPanel {
 	
 	public void getValTab(){
 		
+		System.out.println("test1");
 		// taking energies according to Qn values.
 		for(int i=0; i<table.getRowCount();i++){
-			
+			System.out.println(goodRow);
 			for(int j=0; j<qnsFixedVal.size();j++){
-				if(qnsValList.get(j).getValue().equals(table.getModel().getValueAt(j+4,i))|qnsValList.get(j).getValue().equals("default")){
-					goodRow=true;					
+				if(table.getModel().getValueAt(i,j+3).equals(qnsValList.get(j).getValue())|qnsValList.get(j).getValue().equals("default")){
+					goodRow=true;				
+					System.out.println(qnsValList.get(j).getValue()+"  "+table.getModel().getValueAt(i,j+3));
 				}else{
 					goodRow=false;
+					System.out.println(qnsValList.get(j).getValue()+"  "+table.getModel().getValueAt(i,j+3));
 					break;
 				}			
 			}
 			
 			if(goodRow==true){
 				energyTab.add((Float) table.getModel().getValueAt(i, 1));
+				System.out.println(energyTab.get(i));
 			}
 		}
 		
@@ -213,14 +222,12 @@ public class ParseTab extends JPanel {
 				energyTabfinal.add(energyTab.get(k));
 			}
 		}
-		
-		
 	}
 	
 	
 	//Getting the qns values
 	public void getParam(){
-		
+		System.out.println("test2");
 		//fixed values
 		for(int i=0; i<qns.size();i++){
 			qnsFixedVal.add(qnsValList.get(i).getValue());
