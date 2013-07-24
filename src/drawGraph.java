@@ -17,7 +17,7 @@ import org.jfree.data.statistics.HistogramDataset;
 public class drawGraph extends JFrame {
 	
 	double[] v1;
-	public drawGraph(List<Float> energyList, float energyMin, float energyMax){
+	public drawGraph(List<Double> energyList, double energyMin, double energyMax){
 		super("Graph");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(600,600);
