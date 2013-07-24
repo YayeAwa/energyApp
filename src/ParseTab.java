@@ -173,6 +173,15 @@ public class ParseTab extends JPanel {
 		
 		
 		
+		JButton clear = new JButton("Clear fields");
+		clear.setPreferredSize(new Dimension(200,20));
+		clear.setMaximumSize(clear.getPreferredSize());
+		clear.addActionListener(new ActionListener(){
+			public void actionPerformed(ActionEvent e){
+				clearFields();
+			}
+		});
+		
 		JButton valid = new JButton("Validate");
 		valid.setPreferredSize(new Dimension(200,20));
 		valid.setMaximumSize(valid.getPreferredSize());
@@ -185,7 +194,7 @@ public class ParseTab extends JPanel {
 			}
 		});
 		
-		
+		bottom.add(clear, BorderLayout.WEST);
 		bottom.add(valid, BorderLayout.EAST);
 		
 		this.add(center, BorderLayout.CENTER);
@@ -256,7 +265,7 @@ public class ParseTab extends JPanel {
 		//fixed values
 		for(int i=0; i<qns.size();i++){
 			qnsFixedVal.add(qnsValList.get(i).getText());
-			System.out.println(qnsFixedVal.get(i));
+			//System.out.println(qnsFixedVal.get(i));
 		}
 		
 
@@ -278,6 +287,13 @@ public class ParseTab extends JPanel {
 		}
 	}
 	
+	public void clearFields(){
+		for(int i=0; i<qns.size();i++){
+			qnsValList.get(i).setText("default");
+		}
+		energyMin.setText(null);
+		energyMax.setText(null);
+	}
 	
 	
 	
